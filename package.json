@@ -10,6 +10,7 @@
   "dependencies": {
     "buffer": "^5.4.3",
     "expo": "^35.0.0",
+    "expo-file-system": "~7.0.0",
     "expo-sqlite": "~7.0.0",
     "mem": "4.0.0",
     "react": "16.8.3",

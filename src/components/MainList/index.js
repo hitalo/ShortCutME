@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Linking, TouchableOpacity, Modal, TouchableWith
 import { ListItem, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as uuid from 'uuid/v4';
+import * as FileSystem from 'expo-file-system';
 
 import { DBManager } from '../../database/DBManager';
 import ConfirmModal from '../../modals/confirm-modal';
@@ -13,6 +14,8 @@ export default class MainList extends Component {
 
   newItem = { id: '', name: '', url: '' }
   db = new DBManager();
+  importText = "Current items will be overwrited by shortcutme.txt located in " + FileSystem.documentDirectory + ". Continue?";
+  exportText = "A file named shortcutme.txt will be created in " + FileSystem.documentDirectory + ". Continue?"
 
   constructor(props) {
     super(props);
@@ -24,12 +27,16 @@ export default class MainList extends Component {
       isAddItemVisible: false,
       isItemOptionsVisible: false,
       isConfirmMenuVisible: false,
+      isConfirmImportVisible: false,
+      isConfirmExportVisible: false,
+      isMenuVisible: false,
       search: ''
     }
   }
 
   componentDidMount() {
     this.props.navigation.setParams({ changeAddItemVisibility: this.changeAddItemVisibility });
+    this.props.navigation.setParams({ changeMenuVisibility: this.changeMenuVisibility });
     this.getItems();
   }
 
@@ -45,12 +52,20 @@ export default class MainList extends Component {
       headerRight: (
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
-            style={{ margin: 10, padding: 10 }}
+            style={{ margin: 5, padding: 5 }}
             onPress={() => {
               navigation.getParam('changeAddItemVisibility')(true);
             }}
           >
             <Icon name="add" size={30} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ margin: 5, padding: 5 }}
+            onPress={() => {
+              navigation.getParam('changeMenuVisibility')(true);
+            }}
+          >
+            <Icon name="more-vert" size={30} color="white" />
           </TouchableOpacity>
         </View>
       ),
@@ -113,6 +128,18 @@ export default class MainList extends Component {
     this.setState({ isConfirmMenuVisible });
   }
 
+  changeConfirmImportVisibility = (isConfirmImportVisible) => {
+    this.setState({ isConfirmImportVisible });
+  }
+
+  changeConfirmExportVisibility = (isConfirmExportVisible) => {
+    this.setState({ isConfirmExportVisible });
+  }
+
+  changeMenuVisibility = (isMenuVisible) => {
+    this.setState({ isMenuVisible });
+  }
+
   updateSearch = search => {
 
     let items = [{}];
@@ -128,6 +155,21 @@ export default class MainList extends Component {
 
   };
 
+  importDatabase = async (isOkSelected) => {
+    if (isOkSelected) {
+      await this.db.importDatabase();
+      this.getItems();
+    }
+    this.changeConfirmImportVisibility(false);
+  }
+
+  exportDatabase = (isOkSelected) => {
+    if(isOkSelected)
+      this.db.exportDatabase();
+    
+    this.changeConfirmExportVisibility(false);
+  }
+
   render() {
     return (
       <View>
@@ -142,6 +184,69 @@ export default class MainList extends Component {
             title="Confirm delete"
             okClick={this.deleteSelectedItem}
             outside={this.changeConfirmMenuVisibility} />
+        </Modal>
+
+        <Modal
+          style={{ flex: 1 }}
+          visible={this.state.isConfirmImportVisible}
+          transparent={true}
+          onRequestClose={() => this.changeConfirmImportVisibility(false)}>
+          <ConfirmModal
+            text={this.importText}
+            title="Confirm import"
+            okClick={this.importDatabase}
+            outside={this.changeConfirmImportVisibility} />
+        </Modal>
+
+        <Modal
+          style={{ flex: 1 }}
+          visible={this.state.isConfirmExportVisible}
+          transparent={true}
+          onRequestClose={() => this.changeConfirmExportVisibility(false)}>
+          <ConfirmModal
+            text={this.exportText}
+            title="Confirm export"
+            okClick={this.exportDatabase}
+            outside={this.changeConfirmExportVisibility} />
+        </Modal>
+
+        <Modal
+          visible={this.state.isMenuVisible}
+          transparent={true}
+          style={{ flex: 1 }}
+          onRequestClose={() => this.changeMenuVisibility(false)}>
+
+          <TouchableWithoutFeedback
+            style={{ flex: 1 }}
+            onPress={() => this.changeMenuVisibility(false)}>
+            <View
+              style={styles.darkModal}>
+              <TouchableWithoutFeedback>
+                <View
+                  style={styles.whiteModal}>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.changeConfirmExportVisibility(true);
+                      this.changeMenuVisibility(false);
+                    }}
+                    style={styles.menuItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Export Data</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.changeConfirmImportVisibility(true);
+                      this.changeMenuVisibility(false);
+                    }}
+                    style={styles.menuItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Import Data</Text>
+                  </TouchableOpacity>
+
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+
         </Modal>
 
         <Modal
@@ -329,5 +434,11 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginBottom: 50
+  },
+  menuItem: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomColor: 'black'
   }
 });

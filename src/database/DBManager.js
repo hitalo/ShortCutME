@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-// import uuid from 'react-native-uuid';
+import * as FileSystem from 'expo-file-system';
 
 export class DBManager {
 
@@ -43,6 +43,33 @@ export class DBManager {
                 (_, { error }) => console.log('del error', JSON.stringify(error)),
             );
         });
+    }
+
+    exportDatabase() {
+        let content = '{"db":{ "items":[';
+
+        this.getItems((items) => {
+            items.forEach(item => {
+                content += '{"id": "' + item.id + '", "name":"' + item.name + '", "url":"' + item.url + '"},'
+            });
+            content = content.slice(0, -1); //removing comma
+            content += ']}}';
+
+            FileSystem.writeAsStringAsync(FileSystem.documentDirectory + '/shortcutme.txt', content)
+                .then(result => console.log("ok"))
+                .catch(error => console.log("error", error));
+        });
+    }
+
+    importDatabase() {
+        return FileSystem.readAsStringAsync(FileSystem.documentDirectory + '/shortcutme.txt')
+            .then(result => {
+                const database = JSON.parse(result);
+                database.db.items.forEach(item => {
+                    this.addOrUpdateItem(item);
+                });
+            })
+            .catch(error => console.log("error", error));
     }
 
     init() {
