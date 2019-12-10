@@ -1,0 +1,27 @@
+
+{
+    "help": {
+        "items": [
+            {
+                "name": "Add item", 
+                "body": "To add an item to your list, do: \n\nPress the '+' icon on top right corner, put any name (this will be used to identify the item), the url of the item and press 'Save'"
+            },
+            {
+                "name": "Edit item", 
+                "body": "To edit an item of your list, do: \n\nPress and hold the item you want to edit, press edit on the window that opens, do your modifications and press 'Save'"
+            },
+            {
+                "name": "Delete item", 
+                "body": "To delete an item of your list, do: \n\nPress and hold the itemyou want to delete, press delete on the window that opens and press 'Ok'"
+            },
+            {
+                "name": "Export", 
+                "body": "Export your list so you can import it later.\n\nTo export your list follow:\n\nMenu (top-right corner) -> Export data -> Ok.\n\nThe file named 'shortcutme.txt' will be created at\n\n #{location}\n\n"
+            },
+            {
+                "name": "Import", 
+                "body": "To import your list, you have to put the file 'shortcutme.txt' (previously exported) in\n\n #{location}\n\n then follow:\n\nMenu (top-right corner) -> Import data -> Ok\n\nWARNING: this will replace or update your current items"
+            }
+        ]
+    }
+}

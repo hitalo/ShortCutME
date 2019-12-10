@@ -14,8 +14,8 @@ export default class MainList extends Component {
 
   newItem = { id: '', name: '', url: '' }
   db = new DBManager();
-  importText = "Current items will be overwrited by shortcutme.txt located in " + FileSystem.documentDirectory + ". Continue?";
-  exportText = "A file named shortcutme.txt will be created in " + FileSystem.documentDirectory + ". Continue?"
+  importText = "Current items will be overwrited by shortcutme.txt located in \n\n" + FileSystem.documentDirectory + ".\n\n Continue?";
+  exportText = "A file named shortcutme.txt will be created in \n\n" + FileSystem.documentDirectory + ".\n\n Continue?"
 
   constructor(props) {
     super(props);
@@ -170,6 +170,11 @@ export default class MainList extends Component {
     this.changeConfirmExportVisibility(false);
   }
 
+  openHelp() {
+    this.changeMenuVisibility(false);
+    this.props.navigation.navigate("Help");
+  }
+
   render() {
     return (
       <View>
@@ -240,6 +245,11 @@ export default class MainList extends Component {
                     }}
                     style={styles.menuItem}>
                     <Text style={{ color: 'black', fontSize: 20 }}>Import Data</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.openHelp()}
+                    style={styles.menuItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Help</Text>
                   </TouchableOpacity>
 
                 </View>
