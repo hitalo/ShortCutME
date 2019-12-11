@@ -12,7 +12,7 @@
             },
             {
                 "name": "Delete item", 
-                "body": "To delete an item of your list, do: \n\nPress and hold the itemyou want to delete, press delete on the window that opens and press 'Ok'"
+                "body": "To delete an item of your list, do: \n\nPress and hold the item you want to delete, press delete on the window that opens and press 'Ok'"
             },
             {
                 "name": "Export", 
