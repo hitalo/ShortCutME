@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0000ff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,7 +27,10 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.hit.shortcutme"
+      "package": "com.hit.shortcutme",
+      "adaptiveIcon": {
+        "backgroundColor":"#0000ff"
+      }
     }
   }
 }
