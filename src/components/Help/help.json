@@ -13,14 +13,6 @@
             {
                 "name": "Delete item", 
                 "body": "To delete an item of your list, do: \n\nPress and hold the item you want to delete, press delete on the window that opens and press 'Ok'"
-            },
-            {
-                "name": "Export", 
-                "body": "Export your list so you can import it later.\n\nTo export your list follow:\n\nMenu (top-right corner) -> Export data -> Ok.\n\nThe file named 'shortcutme.txt' will be created at\n\n #{location}\n\n"
-            },
-            {
-                "name": "Import", 
-                "body": "To import your list, you have to put the file 'shortcutme.txt' (previously exported) in\n\n #{location}\n\n then follow:\n\nMenu (top-right corner) -> Import data -> Ok\n\nWARNING: this will replace or update your current items"
             }
         ]
     }

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Linking, TouchableOpacity, Modal, TouchableWith
 import { ListItem, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as uuid from 'uuid/v4';
-import * as FileSystem from 'expo-file-system';
+// import * as FileSystem from 'expo-file-system';
 
 import { DBManager } from '../../database/DBManager';
 import ConfirmModal from '../../modals/confirm-modal';
@@ -14,8 +14,8 @@ export default class MainList extends Component {
 
   newItem = { id: '', name: '', url: '' }
   db = new DBManager();
-  importText = "Current items will be overwrited by shortcutme.txt located in \n\n" + FileSystem.documentDirectory + ".\n\n Continue?";
-  exportText = "A file named shortcutme.txt will be created in \n\n" + FileSystem.documentDirectory + ".\n\n Continue?"
+  // importText = "Current items will be overwrited by shortcutme.txt located in \n\n" + FileSystem.documentDirectory + "shortcutme.\n\n Continue?";
+  // exportText = "A file named shortcutme.txt will be created in \n\n" + FileSystem.documentDirectory + "shortcutme.\n\n Continue?"
 
   constructor(props) {
     super(props);
@@ -27,8 +27,8 @@ export default class MainList extends Component {
       isAddItemVisible: false,
       isItemOptionsVisible: false,
       isConfirmMenuVisible: false,
-      isConfirmImportVisible: false,
-      isConfirmExportVisible: false,
+      // isConfirmImportVisible: false,
+      // isConfirmExportVisible: false,
       isMenuVisible: false,
       search: ''
     }
@@ -128,13 +128,13 @@ export default class MainList extends Component {
     this.setState({ isConfirmMenuVisible });
   }
 
-  changeConfirmImportVisibility = (isConfirmImportVisible) => {
-    this.setState({ isConfirmImportVisible });
-  }
+  // changeConfirmImportVisibility = (isConfirmImportVisible) => {
+  //   this.setState({ isConfirmImportVisible });
+  // }
 
-  changeConfirmExportVisibility = (isConfirmExportVisible) => {
-    this.setState({ isConfirmExportVisible });
-  }
+  // changeConfirmExportVisibility = (isConfirmExportVisible) => {
+  //   this.setState({ isConfirmExportVisible });
+  // }
 
   changeMenuVisibility = (isMenuVisible) => {
     this.setState({ isMenuVisible });
@@ -155,20 +155,20 @@ export default class MainList extends Component {
 
   };
 
-  importDatabase = async (isOkSelected) => {
-    if (isOkSelected) {
-      await this.db.importDatabase();
-      this.getItems();
-    }
-    this.changeConfirmImportVisibility(false);
-  }
+  // importDatabase = async (isOkSelected) => {
+  //   if (isOkSelected) {
+  //     await this.db.importDatabase();
+  //     this.getItems();
+  //   }
+  //   this.changeConfirmImportVisibility(false);
+  // }
 
-  exportDatabase = (isOkSelected) => {
-    if(isOkSelected)
-      this.db.exportDatabase();
+  // exportDatabase = (isOkSelected) => {
+  //   if(isOkSelected)
+  //     this.db.exportDatabase();
     
-    this.changeConfirmExportVisibility(false);
-  }
+  //   this.changeConfirmExportVisibility(false);
+  // }
 
   openHelp() {
     this.changeMenuVisibility(false);
@@ -191,7 +191,7 @@ export default class MainList extends Component {
             outside={this.changeConfirmMenuVisibility} />
         </Modal>
 
-        <Modal
+        {/* <Modal
           style={{ flex: 1 }}
           visible={this.state.isConfirmImportVisible}
           transparent={true}
@@ -213,7 +213,7 @@ export default class MainList extends Component {
             title="Confirm export"
             okClick={this.exportDatabase}
             outside={this.changeConfirmExportVisibility} />
-        </Modal>
+        </Modal> */}
 
         <Modal
           visible={this.state.isMenuVisible}
@@ -230,7 +230,7 @@ export default class MainList extends Component {
                 <View
                   style={styles.whiteModal}>
 
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => {
                       this.changeConfirmExportVisibility(true);
                       this.changeMenuVisibility(false);
@@ -245,7 +245,7 @@ export default class MainList extends Component {
                     }}
                     style={styles.menuItem}>
                     <Text style={{ color: 'black', fontSize: 20 }}>Import Data</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <TouchableOpacity
                     onPress={() => this.openHelp()}
                     style={styles.menuItem}>

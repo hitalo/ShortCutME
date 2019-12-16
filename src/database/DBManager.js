@@ -4,6 +4,8 @@ import * as FileSystem from 'expo-file-system';
 export class DBManager {
 
     db = SQLite.openDatabase("db.db");
+    // directory = FileSystem.documentDirectory + "shortcutme";
+    // filePath = this.directory + "/shortcutme.txt"
 
 
     constructor() {
@@ -45,32 +47,36 @@ export class DBManager {
         });
     }
 
-    exportDatabase() {
-        let content = '{"db":{ "items":[';
+    // async exportDatabase() {
 
-        this.getItems((items) => {
-            items.forEach(item => {
-                content += '{"id": "' + item.id + '", "name":"' + item.name + '", "url":"' + item.url + '"},'
-            });
-            content = content.slice(0, -1); //removing comma
-            content += ']}}';
+    //     const dir = await FileSystem.getInfoAsync(this.directory);
+    //     if(!dir.exists) {
+    //         FileSystem.makeDirectoryAsync(this.directory)
+    //     }
 
-            FileSystem.writeAsStringAsync(FileSystem.documentDirectory + '/shortcutme.txt', content)
-                .then(result => console.log("ok"))
-                .catch(error => console.log("error", error));
-        });
-    }
+    //     let content = '{"db":{ "items":[';
 
-    importDatabase() {
-        return FileSystem.readAsStringAsync(FileSystem.documentDirectory + '/shortcutme.txt')
-            .then(result => {
-                const database = JSON.parse(result);
-                database.db.items.forEach(item => {
-                    this.addOrUpdateItem(item);
-                });
-            })
-            .catch(error => console.log("error", error));
-    }
+    //     this.getItems((items) => {
+    //         items.forEach(item => {
+    //             content += '{"id": "' + item.id + '", "name":"' + item.name + '", "url":"' + item.url + '"},'
+    //         });
+    //         content = content.slice(0, -1); //removing comma
+    //         content += ']}}';
+
+    //         FileSystem.writeAsStringAsync(this.filePath, content);
+    //     });
+    // }
+
+    // importDatabase() {
+    //     return FileSystem.readAsStringAsync(this.filePath)
+    //         .then(result => {
+    //             const database = JSON.parse(result);
+    //             database.db.items.forEach(item => {
+    //                 this.addOrUpdateItem(item);
+    //             });
+    //         })
+    //         .catch(error => console.log("error", error));
+    // }
 
     init() {
         this.db.transaction(tx => {
