@@ -447,7 +447,8 @@ const styles = StyleSheet.create({
   },
   search: {
     backgroundColor: 'white',
-    borderBottomColor: '#ddd'
+    borderBottomColor: '#ddd',
+    borderTopColor: '#ddd'
   },
   searchInput: {
     backgroundColor: 'white',

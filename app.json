@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0000ff"
+      "backgroundColor": "#3e73f0"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -29,7 +29,7 @@
     "android": {
       "package": "com.hit.shortcutme",
       "adaptiveIcon": {
-        "backgroundColor":"#0000ff"
+        "backgroundColor":"#3e73f0"
       }
     }
   }
