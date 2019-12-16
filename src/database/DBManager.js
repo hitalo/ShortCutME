@@ -15,7 +15,7 @@ export class DBManager {
     addOrUpdateItem(item) {
         this.db.transaction(tx => {
             tx.executeSql(
-                "insert or replace into items (id, name, url) values (?, ?, ?);", [item.id, item.name, item.url],
+                "insert or replace into items (id, name, url) values (?, ?, ?);", [item.id, item.name.trim(), item.url],
                 (_, { rows }) => console.log('add ok', JSON.stringify(rows)),
                 (_, { error }) => console.log('add error', JSON.stringify(error)),
             );

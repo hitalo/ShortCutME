@@ -81,13 +81,23 @@ export default class MainList extends Component {
   }
 
   addOrUpdateItem(item) {
-    if (!item.id) {
-      item.id = uuid.default();
-      if (!item.url.startsWith('http')) { item.url = 'http://' + item.url };
+    if (this.validateItem(item)) {
+      if (!item.id) {
+        item.id = uuid.default();
+        if (!item.url.startsWith('http')) { item.url = 'http://' + item.url };
+      }
+      this.db.addOrUpdateItem(item);
+      this.changeAddItemVisibility(false);
+      this.getItems();
     }
-    this.db.addOrUpdateItem(item);
-    this.changeAddItemVisibility(false);
-    this.getItems();
+  }
+
+  validateItem(item) {
+    if (!item || !item.name || item.name.trim() === "" || !item.url || item.url.trim() === "") {
+      alert("Name and URL are required");
+      return false;
+    }
+    return true;
   }
 
   deleteSelectedItem = async (isOkSelected) => {
@@ -166,7 +176,7 @@ export default class MainList extends Component {
   // exportDatabase = (isOkSelected) => {
   //   if(isOkSelected)
   //     this.db.exportDatabase();
-    
+
   //   this.changeConfirmExportVisibility(false);
   // }
 
