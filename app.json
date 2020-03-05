@@ -28,9 +28,11 @@
     },
     "android": {
       "package": "com.hit.shortcutme",
+      "icon": "./assets/icon.png",
       "adaptiveIcon": {
         "backgroundColor":"#3e73f0"
-      }
+      },
+      "permissions": []
     }
   }
 }
